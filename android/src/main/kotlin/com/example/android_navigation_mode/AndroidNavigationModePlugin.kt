@@ -27,8 +27,12 @@ class AndroidNavigationModePlugin: FlutterPlugin, MethodCallHandler {
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if (call.method == "get_navigation_mode") {
       val resourceIdentity = context.resources.getIdentifier("config_navBarInteractionMode", "integer", "android")
-      val navMode = context.resources.getInteger(resourceIdentity)
-      result.success(navMode)
+      if (resourceIdentity > 0) {
+        val navMode = context.resources.getInteger(resourceIdentity)
+        result.success(navMode)
+      } else {
+        result.success(0)
+      }
     } else {
       result.notImplemented()
     }
